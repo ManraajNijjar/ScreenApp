@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package screen;
+
+option go_package="screenpb";
+
+message SampleObject {
+    int32 first_int = 1;
+    int32 second_int = 2;
+}
+
+message SampleRequest {
+    SampleObject calculation = 1;
+}
+
+message SampleResponse {
+   int32 result = 1;
+}
+
+service ScreenService{
+    rpc Sample(SampleRequest) returns (SampleResponse) {
+
+    };
+};
