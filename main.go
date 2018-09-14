@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -11,10 +10,10 @@ type pageVariables struct {
 }
 
 func main() {
-	http.HandleFunc("/", serveIndex)
-	http.HandleFunc("/app.js", serveApp)
-	http.ListenAndServe(":8080", nil)
-	fmt.Println("running")
+	//http.HandleFunc("/", serveIndex)
+	//http.HandleFunc("/app.js", serveApp)
+	//http.ListenAndServe(":8080", nil)
+
 }
 
 func serveIndex(writer http.ResponseWriter, req *http.Request) {

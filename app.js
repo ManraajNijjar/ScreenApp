@@ -2,12 +2,14 @@
 var canvas = document.getElementById("draw");
 
 
-var ctx = canvas.getContext("2d");
+var ctxCanvas = canvas.getContext("2d");
 resize();
 
+
 function resize() {
-  ctx.canvas.width = window.innerWidth;
-  ctx.canvas.height = window.innerHeight;
+  ctxCanvas.canvas.width = window.innerWidth;
+  ctxCanvas.canvas.height = window.innerHeight;
+  drawGrid();
 }
 
 
@@ -29,15 +31,35 @@ function draw(e) {
 
   var color = document.getElementById("hex").value;
   console.log(color);
-  ctx.beginPath();
+  ctxCanvas.beginPath();
 
-  ctx.lineWidth = 20;
-  ctx.lineCap = "round";
-  ctx.strokeStyle = color;
+  ctxCanvas.lineWidth = 5;
+  ctxCanvas.lineCap = "round";
+  ctxCanvas.strokeStyle = color;
 
-  ctx.moveTo(pos.x, pos.y);
+  ctxCanvas.moveTo(pos.x, pos.y);
   setPosition(e);
-  ctx.lineTo(pos.x, pos.y);
+  ctxCanvas.lineTo(pos.x, pos.y);
 
-  ctx.stroke();
+  ctxCanvas.stroke();
+}
+
+function drawGrid() {
+    var bw = canvas.width
+    var bh = canvas.height
+    var p = 10;
+    var gridSize = 40
+    
+    for (var x = 0; x <= bw; x += gridSize) {
+        ctxCanvas.moveTo(0.5 + x + p, p);
+        ctxCanvas.lineTo(0.5 + x + p, bh + p);
+    }
+
+    for (var x = 0; x <= bh; x += gridSize) {
+        ctxCanvas.moveTo(p, 0.5 + x + p);
+        ctxCanvas.lineTo(bw + p, 0.5 + x + p);
+    }
+
+    ctxCanvas.strokeStyle = "black";
+    ctxCanvas.stroke();
 }
