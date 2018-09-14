@@ -2,21 +2,36 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 
 	"../../Screen/screenpb"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type server struct{}
 
 func (*server) Sample(ctx context.Context, req *screenpb.SampleRequest) (*screenpb.SampleResponse, error) {
-	responseValue := req.GetCalculation().GetFirstInt() + req.GetCalculation().GetSecondInt()
+	fmt.Println("Request came in:", req)
 
+	responseValue := req.GetCalculation().GetFirstInt() + req.GetCalculation().GetSecondInt()
+	fmt.Println(responseValue)
 	res := &screenpb.SampleResponse{
 		Result: responseValue,
+	}
+	return res, nil
+}
+
+func (*server) Speak(ctx context.Context, req *screenpb.SpeakRequest) (*screenpb.SpeakResponse, error) {
+	fmt.Println("Speak Request came in:", req)
+
+	responseValue := req.GetSpeakPhrase()
+	fmt.Println(responseValue)
+	res := &screenpb.SpeakResponse{
+		Result: "String Check",
 	}
 	return res, nil
 }
@@ -29,6 +44,7 @@ func main() {
 
 	s := grpc.NewServer()
 	screenpb.RegisterScreenServiceServer(s, &server{})
+	reflection.Register(s)
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
