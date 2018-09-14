@@ -9,7 +9,6 @@ import (
 	"../../Screen/screenpb"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 type server struct{}
@@ -31,7 +30,7 @@ func (*server) Speak(ctx context.Context, req *screenpb.SpeakRequest) (*screenpb
 	responseValue := req.GetSpeakPhrase()
 	fmt.Println(responseValue)
 	res := &screenpb.SpeakResponse{
-		Result: "String Check",
+		Result: responseValue,
 	}
 	return res, nil
 }
@@ -44,7 +43,6 @@ func main() {
 
 	s := grpc.NewServer()
 	screenpb.RegisterScreenServiceServer(s, &server{})
-	reflection.Register(s)
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
