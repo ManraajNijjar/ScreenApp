@@ -10,9 +10,9 @@ type pageVariables struct {
 }
 
 func main() {
-	//http.HandleFunc("/", serveIndex)
-	//http.HandleFunc("/app.js", serveApp)
-	//http.ListenAndServe(":8080", nil)
+	http.HandleFunc("/", serveIndex)
+	http.HandleFunc("/app.js", serveApp)
+	http.ListenAndServe(":8080", nil)
 
 }
 
