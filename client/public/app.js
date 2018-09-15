@@ -1,4 +1,12 @@
 
+var app = angular.module('battleMat', []);
+
+app.controller('MainCtrl', [
+  '$scope',
+  function($scope){
+    $scope.test = 'Hello world!';
+  }]);
+
 var canvas = document.getElementById("draw");
 
 
