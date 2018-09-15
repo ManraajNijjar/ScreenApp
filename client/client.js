@@ -1,4 +1,6 @@
-//var PROTO_PATH = __dirname + '/../screenpb/screen.proto';
+var express = require('express');
+var app = express();
+
 var PROTO_PATH = "/Users/manraajnijjar/Desktop/Screen/screenpb/screen.proto"
 
 var grpc = require('grpc');
@@ -11,22 +13,23 @@ var packageDefinition = protoLoader.loadSync(
      defaults: true,
      oneofs: true
     });
-//console.log(packageDefinition)
+
 var sampleDef = grpc.loadPackageDefinition(packageDefinition).screen;
+var stub = new sampleDef.ScreenService('localhost:50051', grpc.credentials.createInsecure());
 
-//console.log(sampleDef)
+app.use(express.static(__dirname + '/public'));
 
-function main(){
-    var stub = new sampleDef.ScreenService('localhost:50051', grpc.credentials.createInsecure());
+app.listen('5000'); 
 
-    var calculation = {first_int: 4, second_int: 5};
+function calculate(){
+    var calculat = {first_int: 4, second_int: 5};
     var sampCalc = {
-        Calculation: calculation
+        calculation: calculat
     }
 
     
     //Console.log(sampCalc)
-    /*stub.sample(sampCalc, function(err, sampRes) {
+    stub.sample(sampCalc, function(err, sampRes) {
     if (err) {
         // process error
         console.log(err)
@@ -34,8 +37,11 @@ function main(){
         // process feature
         console.log(sampRes);
     }
-    });*/
-    stub.speak({SpeakPhrase: "Hello"}, function(err, sampRes) {
+    });
+}
+
+function speak(){
+    stub.speak({speakPhrase: "Hellsfsfso"}, function(err, sampRes) {
         if (err) {
             // process error
             console.log(err)
@@ -45,5 +51,3 @@ function main(){
         }
     });
 }
-
-main();
